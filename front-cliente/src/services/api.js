@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:8000'; // Ajuste para a URL do seu backend FastAPI
+const API_URL = import.meta.env.VITE_API_URL; // Ajuste para a URL do seu backend FastAPI
 
 export const participarSorteio = async (dadosParticipante) => {
   try {
