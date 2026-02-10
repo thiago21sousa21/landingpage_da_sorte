@@ -10,19 +10,29 @@ const Dashboard = () => {
   const [resultadoSorteio, setResultadoSorteio] = useState(null);
 
   useEffect(() => {
-    const fetchParticipantes = async () => {
-      try {
-        const response = await api.get('/admin/participantes'); // Ajuste conforme sua rota
-        setParticipantes(response.data);
-      } catch (error) {
-        console.error("Erro ao buscar participantes", error);
-      } finally {
-        setLoading(false);
-      }
-    };
+  const carregarDadosIniciais = async () => {
+    try {
+      // Busca participantes e o último sorteio em paralelo
+      const [resParticipantes, resSorteio] = await Promise.all([
+        api.get('/admin/participantes'),
+        api.get('/admin/ultimo-sorteio') // Verifique se esta rota existe no seu FastAPI
+      ]);
 
-    fetchParticipantes();
-  }, []);
+      setParticipantes(resParticipantes.data);
+      
+      // Se já houve um sorteio, ele aparecerá mesmo após o F5!
+      if (resSorteio.data) {
+        setResultadoSorteio(resSorteio.data);
+      }
+    } catch (error) {
+      console.error("Erro ao carregar dados", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  carregarDadosIniciais();
+}, []);
 
   if (loading) return <div className="loading">Carregando painel...</div>;
 

@@ -5,7 +5,8 @@ import security, schemas, models
 from sqlalchemy.orm import Session
 from database import get_db
 from services import raffle
-from typing import List
+from typing import List, Optional
+from sqlalchemy import desc
 
 router = APIRouter(prefix="/admin", tags=["Administração"])
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="admin/login")
@@ -48,6 +49,25 @@ def sortear_ganhador(db: Session = Depends(get_db), current_user: str = Depends(
     resultado = raffle.realizar_sorteio(db)
     
     # Buscamos o objeto completo do vencedor para a resposta do Schema
+    vencedor = db.query(models.Participante).filter(models.Participante.id == resultado.vencedor_id).first()
+    
+    return {
+        "id": resultado.id,
+        "vencedor": vencedor,
+        "data_sorteio": resultado.data_sorteio
+    }
+
+
+@router.get("/ultimo-sorteio", response_model=Optional[schemas.SorteioResposta])
+def consultar_ultimo_sorteio(db: Session = Depends(get_db), current_user: str = Depends(get_current_user)):
+    # 1. Busca o primeiro (e único) sorteio realizado
+    resultado = db.query(models.Sorteio).order_by(desc(models.Sorteio.id)).first()
+    
+    # 2. Se não houver sorteio ainda, retorna None (ou 404, mas None é mais fácil para o front tratar)
+    if not resultado:
+        return None
+        
+    # 3. Se houver, busca os dados do participante que venceu
     vencedor = db.query(models.Participante).filter(models.Participante.id == resultado.vencedor_id).first()
     
     return {

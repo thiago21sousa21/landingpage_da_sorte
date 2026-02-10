@@ -1,17 +1,21 @@
+import os
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware # 1. Importe o Middleware
+from dotenv import load_dotenv
+
 import models
 from database import engine
 from routers import public, admin
-from fastapi.middleware.cors import CORSMiddleware # 1. Importe o Middleware
+
+load_dotenv()
 
 # Cria as tabelas no banco de dados
 models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="Sistema de Sorteio Profissional")
-origins = [
-    "http://localhost:5173", # Endereço do seu Vite/React/Vue
-    "http://127.0.0.1:5173",
-]
+
+cors_origins_raw = os.getenv("CORS_ORIGINS", "")
+origins = cors_origins_raw.split(",") if cors_origins_raw else []
 
 app.add_middleware(
     CORSMiddleware,

@@ -6,8 +6,8 @@ import models
 def realizar_sorteio(db: Session):
     # 1. Verificar se já existe um vencedor (Regra de Sorteio Único)
     ja_existe = db.query(models.Sorteio).first()
-    if ja_existe:
-        raise HTTPException(status_code=400, detail="O sorteio já foi realizado!")
+    # if ja_existe:
+    #     raise HTTPException(status_code=400, detail="O sorteio já foi realizado!")
 
     # 2. Buscar todos os IDs de participantes
     participantes_ids = db.query(models.Participante.id).all()
