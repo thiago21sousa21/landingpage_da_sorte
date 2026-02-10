@@ -1,29 +1,165 @@
-.landing-page {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
-  font-family: sans-serif;
+/* Configurações Globais e Variáveis */
+:root {
+  --primary: #4F46E5;
+  --secondary: #FBBF24;
+  --bg-color: #F9FAFB;
+  --text-main: #111827;
+  --text-sec: #6B7280;
+  --radius: 6px;
+  --shadow: 0 2px 6px rgba(0,0,0,0.1);
+  --font-family: 'Inter', sans-serif;
 }
+
+.landing-page {
+  font-family: var(--font-family);
+  background-color: var(--bg-color);
+  color: var(--text-main);
+  line-height: 1.6;
+}
+
+/* Tipografia */
+h1 { font-size: 32px; font-weight: 800; line-height: 1.2; margin-bottom: 16px; }
+h2 { font-size: 24px; font-weight: 700; margin-bottom: 16px; }
+h3 { font-size: 20px; font-weight: 600; margin-bottom: 8px; }
+p { color: var(--text-sec); font-size: 16px; }
+
+/* Botões */
+.btn-primary, .btn-secondary {
+  padding: 12px 24px;
+  border-radius: var(--radius);
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s, filter 0.2s;
+  font-size: 16px;
+}
+
+.btn-primary { background-color: var(--primary); color: white; }
+.btn-secondary { background-color: var(--secondary); color: var(--text-main); }
+
+.btn-primary:hover, .btn-secondary:hover {
+  filter: brightness(1.1);
+  transform: translateY(-1px);
+}
+
+/* SEÇÃO HERO */
+.hero-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 80px 10%;
+  gap: 40px;
+  min-height: 80vh;
+}
+
+.hero-content { flex: 1; }
+
+.badge {
+  background: rgba(79, 70, 229, 0.1);
+  color: var(--primary);
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+  display: inline-block;
+}
+
+.hero-content h1 span { color: var(--primary); }
+
+.hero-image img {
+  max-width: 100%;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+/* SEÇÃO DE BENEFÍCIOS */
+.product-features {
+  padding: 64px 10%;
+  text-align: center;
+}
+
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 32px;
+  margin-top: 48px;
+}
+
+.feature-item {
+  padding: 24px;
+  background: white;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.feature-item .icon {
+  font-size: 32px;
+  margin-bottom: 16px;
+  display: block;
+}
+
+/* SEÇÃO DO SORTEIO */
+.giveaway-steps {
+  padding: 64px 10%;
+  background-color: white;
+}
+
+.steps-container { text-align: center; }
 
 .step-cards {
   display: flex;
-  gap: 1rem;
-  margin: 2rem 0;
+  justify-content: center;
+  gap: 24px;
+  margin-top: 40px;
+  flex-wrap: wrap;
 }
 
-.card {
-  border: 1px solid #ddd;
-  padding: 1rem;
+.step-card {
   flex: 1;
+  min-width: 200px;
+  padding: 32px;
+  position: relative;
+  border: 1px solid #E5E7EB;
+  border-radius: var(--radius);
 }
 
-.btn-primary {
-  padding: 1rem 2rem;
-  font-size: 1.2rem;
-  background-color: #007bff;
+.step-number {
+  position: absolute;
+  top: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--primary);
   color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+/* FOOTER / FINAL CTA */
+.final-cta {
+  padding: 80px 10%;
+  text-align: center;
+}
+
+.cta-box {
+  background: white;
+  padding: 48px;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  border-top: 4px solid var(--secondary);
+}
+
+.cta-box p { margin-bottom: 24px; }
+
+/* Responsividade Básica */
+@media (max-width: 768px) {
+  .hero-section { flex-direction: column; text-align: center; padding: 40px 5%; }
+  .hero-image { order: -1; }
+  .step-cards { flex-direction: column; }
 }

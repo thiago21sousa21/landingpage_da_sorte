@@ -1,0 +1,21 @@
+“Vou te enviar componentes React sem estilização. 
+Quero que você me dê o CSS para cada componente de forma que todos os componentes do 
+mesmo projeto pareçam coerentes.
+
+Tema do projeto: 
+Minimalista Moderno Paleta de cores: 
+Primária: #4F46E5 (roxo) 
+Secundária: #FBBF24 (amarelo) 
+Fundo: #F9FAFB (cinza claro) 
+Texto principal: #111827 (quase preto) 
+Texto secundário: #6B7280 (cinza escuro) 
+Tipografia: Fonte: 'Inter', sans-serif 
+Tamanho base: 16px 
+Tamanhos de título: h1: 32px, h2: 24px, h3: 20px 
+Bordas: 6px arredondadas 
+Sombras: 0 2px 6px rgba(0,0,0,0.1) 
+Espaçamentos: padding e margin padrão 16px, 
+espaçamentos menores múltiplos de 8px 
+Estilo desejado: moderno, limpo e minimalista, sem exageros, cores suaves e tipografia clara. 
+Quero que você use esse estilo em todos os componentes que eu te enviar, 
+sem variar muito o tema. Aqui está o componente:

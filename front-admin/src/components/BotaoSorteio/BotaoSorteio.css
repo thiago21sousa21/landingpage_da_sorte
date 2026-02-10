@@ -1,0 +1,64 @@
+/* BotaoSorteio.css */
+
+.btn-sorteio {
+  /* Cores e Identidade */
+  background-color: #FBBF24; /* Cor Secundária */
+  color: #111827; /* Texto Principal para contraste no amarelo */
+  
+  /* Tipografia e Tamanho */
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  
+  /* Espaçamento e Forma */
+  padding: 16px 32px;
+  border: none;
+  border-radius: 6px; /* Borda padrão do projeto */
+  
+  /* Efeitos e Sombras */
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  
+  /* Alinhamento */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+/* Interações */
+.btn-sorteio:hover:not(:disabled) {
+  filter: brightness(1.05);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(251, 191, 36, 0.3); /* Sombra suave na cor do botão */
+}
+
+.btn-sorteio:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+/* Estado de Carregamento e Desabilitado */
+.btn-sorteio:disabled {
+  background-color: #E5E7EB;
+  color: #9CA3AF;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* Animação simples para o texto "Sorteando..." */
+.btn-sorteio:disabled::after {
+  content: "";
+  width: 14px;
+  height: 14px;
+  border: 2px solid #9CA3AF;
+  border-top-color: transparent;
+  border-radius: 50%;
+  display: inline-block;
+  margin-left: 8px;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
