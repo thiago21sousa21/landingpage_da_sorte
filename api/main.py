@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 import models
 from database import engine
-from routers import public
+from routers import public, admin
 from fastapi.middleware.cors import CORSMiddleware # 1. Importe o Middleware
 
 # Cria as tabelas no banco de dados
@@ -23,3 +23,4 @@ app.add_middleware(
 
 # Inclui as rotas públicas
 app.include_router(public.router, tags=["Público"])
+app.include_router(admin.router)
