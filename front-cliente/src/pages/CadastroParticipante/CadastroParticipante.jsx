@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { participarSorteio } from '../../services/api'; 
+import Comprovante from '../../components/Comprovante/Comprovante';
 import './CadastroParticipante.css';
 
 const CadastroParticipante = () => {
@@ -7,6 +8,8 @@ const CadastroParticipante = () => {
 const [formData, setFormData] = useState({ nome: '', cpf: '', email: '', endereco: '' });
   const [loading, setLoading] = useState(false);
   const [mensagem, setMensagem] = useState({ texto: '', tipo: '' }); // tipo: 'success' ou 'error'
+  const [dadosSucesso, setDadosSucesso] = useState(null); // Guardará o JSON da API
+
   // Função genérica para atualizar qualquer campo
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -27,6 +30,7 @@ const handleSubmit = async (e) => {
         texto: `Sucesso! Seu número da sorte é: ${resultado.numero_sorteio}`, 
         tipo: 'success' 
       });
+      setDadosSucesso(resultado);
       // Opcional: limpar o formulário após sucesso
       setFormData({ nome: '', cpf: '', email: '', endereco: '' });
     } catch (error) {
@@ -35,6 +39,10 @@ const handleSubmit = async (e) => {
       setLoading(false);
     }
   };
+
+  if (dadosSucesso) {
+    return <Comprovante dados={dadosSucesso} />;
+  }
 
   return (
     <div className="cadastro-container">

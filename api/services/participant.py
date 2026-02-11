@@ -27,4 +27,5 @@ def criar_participante(db: Session, participante: schemas.ParticipanteCreate):
     db.add(db_participante)
     db.commit()
     db.refresh(db_participante)
+    print(db_participante.__dict__)
     return db_participante

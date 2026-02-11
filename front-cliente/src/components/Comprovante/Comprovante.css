@@ -1,0 +1,71 @@
+/* Importando a Inter (opcional, caso não tenha no projeto) */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+.comprovante-box {
+  font-family: 'Inter', sans-serif;
+  background-color: #FFFFFF; /* Branco para destacar do Fundo F9FAFB */
+  border-radius: 6px;
+  padding: 24px;
+  max-width: 400px;
+  margin: 16px auto;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  text-align: center;
+  color: #111827;
+  border: 1px solid #E5E7EB; /* Borda sutil para definir o card */
+}
+
+.comprovante-box h3 {
+  font-size: 20px; /* h3 conforme sua escala */
+  margin-bottom: 16px;
+  color: #111827;
+  font-weight: 700;
+}
+
+.comprovante-box p {
+  font-size: 16px;
+  color: #6B7280; /* Texto secundário */
+  margin-bottom: 8px;
+}
+
+.comprovante-box strong {
+  color: #4F46E5; /* Destaque no número da sorte com a cor primária */
+  font-weight: 600;
+}
+
+.comprovante-box small {
+  display: block;
+  margin-top: 8px;
+  font-size: 14px;
+  color: #6B7280;
+}
+
+.comprovante-box button {
+  background-color: #4F46E5;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 6px;
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  margin-top: 16px;
+  width: 100%; /* Botão robusto para mobile-first */
+}
+
+.comprovante-box button:hover {
+  background-color: #4338CA; /* Tom levemente mais escuro para o hover */
+}
+
+.comprovante-box button:active {
+  transform: scale(0.98);
+}
+
+/* Container do QR Code para garantir o espaçamento múltiplo de 8 */
+.qr-container {
+  padding: 16px;
+  background-color: #F9FAFB;
+  border-radius: 6px;
+  display: inline-block;
+  margin: 24px 0;
+}
