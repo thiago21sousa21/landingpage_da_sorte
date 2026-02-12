@@ -11,6 +11,11 @@ load_dotenv() # Carrega as variáveis do .env
 
 DB_URL = os.getenv("DATABASE_URL")
 
+if not DB_URL:
+    print("ALERTA: DATABASE_URL não foi encontrada nas variaveis de ambiente!")
+else:
+    print(f"DATABASE_URL encontrada (iniciada com: {DB_URL[:10]}...)")
+
 if DB_URL and DB_URL.startswith("postgres://"):
     DB_URL = DB_URL.replace("postgres://", "postgresql://", 1)
 else:
@@ -20,11 +25,14 @@ else:
     NAME = os.getenv("DB_NAME")
     DB_URL = f"postgresql://{USER}:{PASS}@{HOST}/{NAME}"
 
+if "postgresql" in DB_URL:
+    engine = create_engine(
+        DB_URL,
+        connect_args={"sslmode":"require"}
+    )
+else:
+    engine = create_engine(DB_URL)
 
-
-    
-
-engine = create_engine(DB_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
 
