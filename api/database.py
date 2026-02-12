@@ -1,42 +1,37 @@
 import os
-from dotenv import load_dotenv
+import re
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
-load_dotenv() # Carrega as variáveis do .env
+# 1. Pegar a URL e limpar qualquer lixo (espaços ou quebras de linha)
+raw_url = os.getenv("DATABASE_URL", "")
+DB_URL = raw_url.strip()
 
-# Monta a URL usando as variáveis de ambiente
-#SQLALCHEMY_DATABASE_URL = f"mysql+pymysql://{os.getenv('DB_USER')}:{os.getenv('DB_PASSWORD')}@{os.getenv('DB_HOST')}/{os.getenv('DB_NAME')}"
-
-DB_URL = os.getenv("DATABASE_URL")
-
-if not DB_URL:
-    print("ALERTA: DATABASE_URL não foi encontrada nas variaveis de ambiente!")
+if DB_URL:
+    # O Render manda postgres://, mas precisamos de postgresql://
+    # Usamos Regex para garantir que só mude o início da frase
+    DB_URL = re.sub(r'^postgres://', 'postgresql://', DB_URL)
+    print(f"🚀 Conectando ao Banco... (Protocolo: {DB_URL.split(':')[0]})")
 else:
-    print(f"DATABASE_URL encontrada (iniciada com: {DB_URL[:10]}...)")
-
-if DB_URL and DB_URL.startswith("postgres://"):
-    DB_URL = DB_URL.replace("postgres://", "postgresql://", 1)
-else:
-    USER = os.getenv("DB_USER")
-    PASS = os.getenv("DB_PASSWORD")
-    HOST = os.getenv("DB_HOST")
-    NAME = os.getenv("DB_NAME")
+    # Fallback Local
+    USER = os.getenv("DB_USER", "postgres")
+    PASS = os.getenv("DB_PASSWORD", "admin")
+    HOST = os.getenv("DB_HOST", "localhost")
+    NAME = os.getenv("DB_NAME", "sistema_sorteio")
     DB_URL = f"postgresql://{USER}:{PASS}@{HOST}/{NAME}"
 
-if "postgresql" in DB_URL:
-    engine = create_engine(
-        DB_URL,
-        connect_args={"sslmode":"require"}
-    )
-else:
-    engine = create_engine(DB_URL)
+# 2. Criação do Engine com parâmetros de segurança para o Render
+# Adicionamos pool_pre_ping para evitar conexões "zumbis"
+engine = create_engine(
+    DB_URL,
+    connect_args={"sslmode": "require"} if "postgresql" in DB_URL else {},
+    pool_pre_ping=True
+)
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
 
-# Dependência para abrir/fechar o banco em cada requisição
 def get_db():
     db = SessionLocal()
     try:
