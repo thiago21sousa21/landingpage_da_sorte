@@ -19,7 +19,7 @@ origins = cors_origins_raw.split(",") if cors_origins_raw else []
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,           # Permite seu frontend
+    allow_origins=["*"],           # Permite seu frontend
     allow_credentials=True,
     allow_methods=["*"],             # Permite todos os métodos (GET, POST, etc)
     allow_headers=["*"],             # Permite todos os cabeçalhos
