@@ -1,105 +1,49 @@
-/* CadastroParticipante.css */
-
-/* Reutilizando as variáveis (caso não estejam no :root global ainda) */
-:root {
-  --primary: #4F46E5;
-  --secondary: #FBBF24;
-  --bg-color: #F9FAFB;
-  --text-main: #111827;
-  --text-sec: #6B7280;
-  --radius: 6px;
-  --shadow: 0 2px 6px rgba(0,0,0,0.1);
-  --font-family: 'Inter', sans-serif;
-}
-
-.cadastro-container {
-  max-width: 450px;
-  margin: 40px auto;
-  padding: 32px;
-  background-color: #ffffff;
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-  text-align: center;
-}
-
-.cadastro-container h2 {
-  font-size: 24px;
-  color: var(--text-main);
-  margin-bottom: 24px;
-  font-weight: 700;
-}
-
-/* Estilização do Formulário */
-form {
+.cadastro-header {
+  margin-bottom: var(--space-lg);
   display: flex;
   flex-direction: column;
-  gap: 16px; /* Espaçamento padrão de 16px */
+  gap: var(--space-sm);
+  align-items: flex-start;
 }
 
-input {
-  width: 100%;
-  padding: 12px 16px;
-  border: 1px solid #E5E7EB; /* Cinza bem clarinho para o estilo clean */
-  border-radius: var(--radius);
-  font-family: var(--font-family);
-  font-size: 16px;
-  color: var(--text-main);
-  background-color: #fff;
-  transition: border-color 0.2s, box-shadow 0.2s;
-  box-sizing: border-box; /* Garante que o padding não quebre a largura */
-}
-
-input::placeholder {
-  color: #9CA3AF;
-}
-
-input:focus {
-  outline: none;
-  border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1); /* Glow suave roxo */
-}
-
-/* Botão de Envio */
-button[type="submit"] {
-  background-color: var(--primary);
-  color: white;
-  padding: 14px;
+.btn-back {
+  background: none;
   border: none;
-  border-radius: var(--radius);
+  color: var(--color-terracotta);
   font-weight: 600;
-  font-size: 16px;
   cursor: pointer;
-  transition: background-color 0.2s, opacity 0.2s;
-  margin-top: 8px;
+  padding: 0;
+  font-size: 0.9rem;
+  transition: var(--transition-fast);
+  display: flex;
+  align-items: center;
+  text-decoration: underline;
 }
 
-button[type="submit"]:hover {
-  filter: brightness(1.1);
+.btn-back:hover {
+  color: var(--color-brown);
+  transform: translateX(-5px); /* Efeito sutil de empurrão para a esquerda */
 }
 
-button[type="submit"]:disabled {
-  background-color: var(--text-sec);
-  cursor: not-allowed;
-  opacity: 0.7;
+/* Ajuste do formulário para centralizar na tela */
+.cadastro-form {
+  max-width: 500px;
+  background-color: white;
+  padding: var(--space-lg);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-soft);
 }
 
-/* Alertas de Feedback */
-.alerta {
-  padding: 12px;
-  border-radius: var(--radius);
-  margin-bottom: 20px;
-  font-size: 14px;
-  font-weight: 500;
+.form-group {
+  margin-bottom: var(--space-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
 }
 
-.alerta.success {
-  background-color: #ECFDF5;
-  color: #065F46;
-  border: 1px solid #A7F3D0;
-}
-
-.alerta.error {
-  background-color: #FEF2F2;
-  color: #991B1B;
-  border: 1px solid #FECACA;
+.form-group label {
+  font-weight: 700;
+  color: var(--color-brown);
+  font-size: 0.85rem;
+  text-transform: uppercase;
 }

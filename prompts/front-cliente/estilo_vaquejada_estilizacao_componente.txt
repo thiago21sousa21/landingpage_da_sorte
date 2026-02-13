@@ -1,0 +1,150 @@
+
+Quero que você atue como um UI Designer especialista em CSS puro, focado em estilização de componentes isolados.
+
+Minha aplicação React já possui um index.css global funcionando como Design System base.
+
+🌵 O GLOBAL JÁ POSSUI
+
+Variáveis CSS disponíveis:
+
+:root {
+  --color-brown: #5C3A21;
+  --color-terracotta: #A0522D;
+  --color-sand: #E8D8C3;
+
+  --color-sun: #D4A017;
+  --color-burned-red: #8B2E1A;
+
+  --color-dark: #1E1E1E;
+  --color-light: #F5F1E8;
+
+  --color-bg: var(--color-light);
+  --color-text: var(--color-dark);
+  --color-primary: var(--color-brown);
+  --color-secondary: var(--color-sun);
+
+  --space-xs: 8px;
+  --space-sm: 16px;
+  --space-md: 24px;
+  --space-lg: 40px;
+  --space-xl: 64px;
+
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+
+  --shadow-soft: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --shadow-medium: 0 8px 20px rgba(0, 0, 0, 0.12);
+
+  --transition-fast: 0.2s ease-in-out;
+  --transition-smooth: 0.3s ease;
+}
+
+
+Classes globais já existentes:
+
+.container
+
+.section
+
+.btn
+
+.btn-primary
+
+Estilização base de inputs
+
+Tipografia padrão
+
+🚨 REGRAS IMPORTANTES
+
+Você deve:
+
+✔ Usar apenas as variáveis globais
+✔ Não criar novas cores fixas
+✔ Não redefinir :root
+✔ Não sobrescrever classes globais
+✔ Não usar !important
+✔ Não usar inline styles
+✔ Não alterar JSX
+✔ Não criar estilos globais acidentais
+
+Este prompt é apenas para um componente isolado.
+
+🎯 OBJETIVO
+
+Criar o CSS específico para o componente enviado.
+
+⚠️ Escopo limitado:
+
+Não criar estilos para header
+
+Não criar estilos para footer
+
+Não mexer em layout da página inteira
+
+Não criar estrutura de seção global
+
+Não assumir que é página completa
+
+O CSS deve afetar apenas:
+
+O container raiz do componente
+
+Seus elementos internos
+
+🎨 IDENTIDADE VISUAL
+
+Tema geral do projeto:
+Vaquejada nordestina tradicional com elegância moderna.
+
+O componente deve transmitir:
+
+Coerência com o restante do site
+
+Rusticidade elegante
+
+Organização moderna
+
+Boa hierarquia
+
+Espaçamento profissional
+
+Mas respeitando que é apenas um bloco da página.
+
+📱 RESPONSIVIDADE
+
+Mobile-first.
+Adicionar media queries apenas se necessário.
+Não criar breakpoints exagerados.
+
+🧠 BOAS PRÁTICAS OBRIGATÓRIAS
+
+Usar classe raiz clara (ex: .form-container)
+
+Escopo bem definido
+
+Evitar seletores genéricos como div, p, button
+
+Evitar vazamento de estilo
+
+Manter consistência com botões e inputs globais
+
+📦 COMPONENTE A SER ESTILIZADO
+
+Cole abaixo o JSX:
+
+COLE AQUI O JSX
+
+💎 RESULTADO ESPERADO
+
+CSS limpo
+
+Profissional
+
+Isolado
+
+Reutilizável
+
+Coerente com o Design System
+
+Sem interferência externa

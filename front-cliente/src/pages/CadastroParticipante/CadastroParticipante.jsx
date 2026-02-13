@@ -1,38 +1,51 @@
 import { useState } from 'react';
-import { participarSorteio } from '../../services/api'; 
+import { useNavigate } from 'react-router-dom';
+import { participarSorteio } from '../../services/api';
 import Comprovante from '../../components/Comprovante/Comprovante';
 import './CadastroParticipante.css';
 
 const CadastroParticipante = () => {
-  // Estado único para o formulário seguindo o seu modelo fixo
-const [formData, setFormData] = useState({ nome: '', cpf: '', email: '', endereco: '' });
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState({ nome: '', cpf: '', email: '', endereco: '' });
   const [loading, setLoading] = useState(false);
-  const [mensagem, setMensagem] = useState({ texto: '', tipo: '' }); // tipo: 'success' ou 'error'
-  const [dadosSucesso, setDadosSucesso] = useState(null); // Guardará o JSON da API
+  const [mensagem, setMensagem] = useState({ texto: '', tipo: '' });
+  const [dadosSucesso, setDadosSucesso] = useState(null);
 
-  // Função genérica para atualizar qualquer campo
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData, // Mantém o que já estava lá
-      [name]: value // Atualiza apenas o campo que mudou
-    });
+  // ✨ Função para aplicar a máscara visual de CPF
+  const maskCPF = (value) => {
+    return value
+      .replace(/\D/g, '') // Remove tudo o que não é dígito
+      .replace(/(\d{3})(\d)/, '$1.$2') // Coloca ponto após os 3 primeiros dígitos
+      .replace(/(\d{3})(\d)/, '$1.$2') // Coloca ponto após os 6 primeiros dígitos
+      .replace(/(\d{3})(\d{1,2})/, '$1-$2') // Coloca hífen após os 9 primeiros dígitos
+      .replace(/(-\d{2})\d+?$/, '$1'); // Limita em 11 dígitos
   };
 
-const handleSubmit = async (e) => {
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    // Se o campo for CPF, aplicamos a máscara antes de salvar no estado
+    if (name === 'cpf') {
+      setFormData({ ...formData, [name]: maskCPF(value) });
+    } else {
+      setFormData({ ...formData, [name]: value });
+    }
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setMensagem({ texto: '', tipo: '' });
 
+    // 🧹 LIMPEZA: Remove pontos e traços antes de enviar para a API
+    const dadosParaEnviar = {
+      ...formData,
+      cpf: formData.cpf.replace(/\D/g, '') // Envia apenas os 11 números
+    };
+
     try {
-      const resultado = await participarSorteio(formData);
-      setMensagem({ 
-        texto: `Sucesso! Seu número da sorte é: ${resultado.numero_sorteio}`, 
-        tipo: 'success' 
-      });
+      const resultado = await participarSorteio(dadosParaEnviar);
       setDadosSucesso(resultado);
-      // Opcional: limpar o formulário após sucesso
-      setFormData({ nome: '', cpf: '', email: '', endereco: '' });
     } catch (error) {
       setMensagem({ texto: error.message, tipo: 'error' });
     } finally {
@@ -45,50 +58,50 @@ const handleSubmit = async (e) => {
   }
 
   return (
-    <div className="cadastro-container">
-      <h2>Cadastro no Sorteio</h2>
-      {/* Feedback para o usuário */}
-      {mensagem.texto && (
-        <div className={`alerta ${mensagem.tipo}`}>
-          {mensagem.texto}
-        </div>
-      )}
-      <form onSubmit={handleSubmit}>
-        <input 
-          name="nome" 
-          placeholder="Nome Completo" 
-          value={formData.nome} 
-          onChange={handleChange} 
-          required 
-        />
-        <input 
-          name="cpf" 
-          placeholder="CPF (apenas 11 números)" 
-          value={formData.cpf} 
-          onChange={handleChange} 
-          maxLength="11"
-          required 
-        />
-        <input 
-          name="email" 
-          type="email" 
-          placeholder="E-mail" 
-          value={formData.email} 
-          onChange={handleChange} 
-          required 
-        />
-        <input 
-          name="endereco" 
-          placeholder="Endereço" 
-          value={formData.endereco} 
-          onChange={handleChange} 
-        />
-        
-        <button type="submit" disabled={loading}>
-          {loading ? 'Enviando...' : 'Finalizar Cadastro'}
-        </button>
-      </form>
-    </div>
+    <section className="section cadastro-page">
+      <div className="container">
+        <header className="cadastro-header">
+          <button className="btn-back" onClick={() => navigate('/')}>
+            ← Voltar para a Home
+          </button>
+          <h2 className="section-title">Inscrição de Vaqueiro</h2>
+        </header>
+
+        {mensagem.texto && <div className={`alerta ${mensagem.tipo}`}>{mensagem.texto}</div>}
+
+        <form className="cadastro-form" onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label>Nome Completo</label>
+            <input name="nome" value={formData.nome} onChange={handleChange} required />
+          </div>
+
+          <div className="form-group">
+            <label>CPF</label>
+            <input 
+              name="cpf" 
+              placeholder="000.000.000-00"
+              value={formData.cpf} 
+              onChange={handleChange} 
+              required 
+            />
+          </div>
+
+          <div className="form-group">
+            <label>E-mail</label>
+            <input name="email" type="email" value={formData.email} onChange={handleChange} required />
+          </div>
+
+          <div className="form-group">
+            <label>Endereço</label>
+            <input name="endereco" value={formData.endereco} onChange={handleChange} />
+          </div>
+          
+          <button type="submit" className="btn btn-primary" disabled={loading}>
+            {loading ? 'Processando...' : 'Finalizar Inscrição'}
+          </button>
+        </form>
+      </div>
+    </section>
   );
 };
 
