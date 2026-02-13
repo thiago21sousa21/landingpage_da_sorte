@@ -1,0 +1,228 @@
+Quero que você atue como um Frontend Architect especialista em React e estrutura semântica profissional.
+
+Tenho uma aplicação React já configurada com:
+
+🌵 CSS GLOBAL JÁ EXISTENTE
+
+O projeto já possui um index.css com as seguintes classes globais disponíveis:
+
+.container
+
+.section
+
+.btn
+
+.btn-primary
+
+Além disso, já existem:
+
+Variáveis CSS globais no :root
+
+Tipografia padrão
+
+Estilo base de inputs
+
+Sistema de espaçamento
+
+Sistema de sombras
+
+⚠️ Portanto:
+
+Use .container sempre que precisar centralizar conteúdo.
+
+Use .section para separar blocos principais.
+
+Use .btn e .btn-primary nos botões principais.
+
+Não criar classes que já existem globalmente.
+
+Não estilizar nada.
+
+Não criar CSS.
+
+Apenas estrutura JSX.
+
+🎯 OBJETIVO
+
+Criar a estrutura completa da página inicial de uma vaquejada fictícia.
+
+⚠️ Importante:
+
+NÃO implementar estilo
+
+NÃO escrever CSS
+
+NÃO usar inline styles
+
+Apenas JSX organizado e pronto para receber estilização depois
+
+🐎 DIREÇÃO TEMÁTICA
+
+É uma grande vaquejada nordestina.
+
+O evento deve parecer:
+
+Grande
+
+Tradicional
+
+Cultural
+
+Bem organizado
+
+Evento oficial
+
+Crie um nome fictício forte para a vaquejada.
+
+Exemplo de nível esperado (não use esse nome):
+“Grande Vaquejada Ouro do Sertão”
+
+🖼 MUITO IMPORTANTE — ESTRUTURA PREPARADA PARA IMAGENS
+
+A página deve estar preparada para imagens futuras.
+
+Você deve:
+
+✔ Criar áreas específicas para:
+
+Background hero (div dedicada para futura imagem de fundo)
+
+Banner promocional
+
+Galeria de fotos do evento
+
+Logos de patrocinadores
+
+Imagem ilustrativa na seção “Sobre”
+
+Imagem na seção de premiação
+
+✔ Criar divs específicas com nomes claros como:
+
+hero-background
+
+about-image
+
+prize-banner
+
+gallery-grid
+
+sponsors-logos
+
+✔ Usar <img src="" alt="" /> como placeholder quando necessário
+
+✔ Deixar claro no código onde a imagem será inserida
+
+⚠️ Não colocar imagens reais.
+Apenas estrutura pronta para receber imagens depois.
+
+📐 ESTRUTURA OBRIGATÓRIA DA HOME
+1️⃣ Hero Section
+
+Nome do evento
+
+Frase de impacto
+
+Data fictícia
+
+Cidade fictícia
+
+Botão principal levando para /cadastro
+
+Área preparada para imagem de fundo
+
+2️⃣ Sobre o Evento
+
+Texto explicando tradição
+
+História fictícia
+
+Área reservada para imagem lateral
+
+3️⃣ Premiação
+
+Categorias
+
+Valores fictícios
+
+Área preparada para banner visual
+
+4️⃣ Sorteios
+
+Descrição dos brindes
+
+Destaque visual para chamar atenção
+
+5️⃣ Atrações Musicais
+
+Lista fictícia de artistas
+
+Área para imagem de palco/show
+
+6️⃣ Estrutura do Evento
+
+Lista de benefícios
+
+Ícones ou espaços reservados para ícones
+
+7️⃣ Galeria
+
+Grid preparado para imagens futuras
+
+8️⃣ Patrocinadores
+
+Área organizada para logos
+
+9️⃣ Rodapé
+
+Contato fictício
+
+Redes sociais fictícias
+
+🔀 Navegação
+
+O botão principal deve usar:
+
+<Link to="/cadastro" className="btn btn-primary">
+
+📦 Organização do Arquivo
+
+Criar:
+
+Home/
+  Home.jsx
+
+
+Você pode dividir em pequenos componentes internos se quiser, mas tudo dentro da pasta Home.
+
+🧠 Boas Práticas Obrigatórias
+
+Usar marcação semântica (section, header, footer)
+
+Usar .section em blocos principais
+
+Usar .container internamente
+
+Criar classes específicas para futuras estilizações
+
+Código limpo e organizado
+
+Comentários explicando cada bloco
+
+💎 Resultado Esperado
+
+A estrutura deve parecer:
+
+Profissional
+
+Pensada para receber identidade visual forte
+
+Rica em conteúdo
+
+Preparada para imagens
+
+Com hierarquia clara
+
+Parecer página real de evento grande
+
+Comece criando o nome fictício da vaquejada e depois implemente toda a estrutura completa da Home.jsx.

@@ -1,0 +1,179 @@
+Perfeito. Agora vamos deixar seu prompt 100% consciente do Design System global.
+
+A ideia é:
+
+Ele saber EXATAMENTE quais variáveis existem
+
+Ele ser OBRIGADO a usá-las
+
+Ele não criar novas cores aleatórias
+
+Ele não redefinir nada do :root
+
+Ele manter consistência total
+
+Agora seu projeto vai começar a ter cara de produto profissional mesmo.
+
+🎯 PROMPT DE ESTILIZAÇÃO — VERSÃO DEFINITIVA (CONSCIENTE DO GLOBAL)
+
+Copie e use:
+
+Quero que você atue como um UI Designer Sênior especialista em CSS puro.
+
+Minha aplicação React já possui um arquivo index.css global que funciona como um Design System base.
+
+Você deve considerar que o seguinte já existe globalmente:
+
+🌵 VARIÁVEIS GLOBAIS DISPONÍVEIS (OBRIGATÓRIO USAR)
+:root {
+  /* 🎨 Cores Primárias */
+  --color-brown: #5C3A21;
+  --color-terracotta: #A0522D;
+  --color-sand: #E8D8C3;
+
+  /* 🌅 Cores Secundárias */
+  --color-sun: #D4A017;
+  --color-burned-red: #8B2E1A;
+
+  /* 🌑 Neutras */
+  --color-dark: #1E1E1E;
+  --color-light: #F5F1E8;
+
+  /* 🎯 Aplicação */
+  --color-bg: var(--color-light);
+  --color-text: var(--color-dark);
+  --color-primary: var(--color-brown);
+  --color-secondary: var(--color-sun);
+
+  /* 📐 Espaçamento */
+  --space-xs: 8px;
+  --space-sm: 16px;
+  --space-md: 24px;
+  --space-lg: 40px;
+  --space-xl: 64px;
+
+  /* 🔲 Bordas */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+
+  /* 🌫 Sombras */
+  --shadow-soft: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --shadow-medium: 0 8px 20px rgba(0, 0, 0, 0.12);
+
+  /* ⏱ Transições */
+  --transition-fast: 0.2s ease-in-out;
+  --transition-smooth: 0.3s ease;
+}
+
+🧱 CLASSES GLOBAIS JÁ EXISTENTES
+
+Já existem no global:
+
+.container
+
+.section
+
+.btn
+
+.btn-primary
+
+Estilização base de input, textarea, select
+
+Tipografia padrão para h1, h2, h3, p
+
+🚨 REGRAS IMPORTANTES
+
+Você deve:
+
+✔ Usar exclusivamente as variáveis acima
+✔ Não criar novas cores fixas em hexadecimal
+✔ Não redefinir :root
+✔ Não recriar reset
+✔ Não sobrescrever classes globais
+✔ Não usar !important
+✔ Não usar inline styles
+✔ Não usar bibliotecas externas
+
+Se precisar de variação de cor, use:
+
+opacity
+
+lighten/darken simulando com rgba
+
+ou combinação com as variáveis existentes
+
+🎯 OBJETIVO
+
+Criar apenas o CSS específico do componente enviado.
+
+O CSS deve:
+
+Complementar o global
+
+Usar o Design System existente
+
+Manter identidade de vaquejada elegante
+
+Parecer profissional
+
+Não gerar conflito com outros componentes
+
+Não criar estilos globais acidentais
+
+🎨 IDENTIDADE VISUAL
+
+Tema: Vaquejada nordestina tradicional com elegância moderna.
+
+Deve transmitir:
+
+Força
+
+Cultura
+
+Rusticidade refinada
+
+Evento grande
+
+Ambiente quente e acolhedor
+
+Mas mantendo:
+
+Hierarquia clara
+
+Espaçamento profissional
+
+Leitura confortável
+
+Layout moderno
+
+📱 RESPONSIVIDADE
+
+Mobile-first.
+Usar media queries apenas quando necessário.
+Aproveitar classes globais sempre que possível.
+
+📦 COMPONENTE A SER ESTILIZADO
+
+Cole abaixo o JSX:
+
+```
+#########################
+#### COLE AQUI O JSX ####
+#########################
+
+```
+
+💎 RESULTADO ESPERADO
+
+CSS limpo
+
+Profissional
+
+Coerente com o Design System
+
+Reutilizando variáveis globais
+
+Sem vazamento
+
+Com consistência visual

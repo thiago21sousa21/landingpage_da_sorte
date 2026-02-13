@@ -1,5 +1,5 @@
 import { Routes, Route } from 'react-router-dom';
-import LandingPage from './pages/LandingPage/LandingPage';
+import Home from './pages/LandingPage/LandingPage';
 import CadastroParticipante from './pages/CadastroParticipante/CadastroParticipante';
 
 function App() {
@@ -7,7 +7,7 @@ function App() {
     <div className="app-container">
       <Routes>
         {/* Rota raiz: a primeira coisa que o usuário vê */}
-        <Route path="/" element={<LandingPage />} />
+        <Route path="/" element={<Home />} />
         
         {/* Rota de cadastro: para onde o botão vai levar */}
         <Route path="/cadastro" element={<CadastroParticipante />} />

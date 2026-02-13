@@ -1,165 +1,247 @@
-/* Configurações Globais e Variáveis */
-:root {
-  --primary: #4F46E5;
-  --secondary: #FBBF24;
-  --bg-color: #F9FAFB;
-  --text-main: #111827;
-  --text-sec: #6B7280;
-  --radius: 6px;
-  --shadow: 0 2px 6px rgba(0,0,0,0.1);
-  --font-family: 'Inter', sans-serif;
-}
-
-.landing-page {
-  font-family: var(--font-family);
-  background-color: var(--bg-color);
-  color: var(--text-main);
-  line-height: 1.6;
-}
-
-/* Tipografia */
-h1 { font-size: 32px; font-weight: 800; line-height: 1.2; margin-bottom: 16px; }
-h2 { font-size: 24px; font-weight: 700; margin-bottom: 16px; }
-h3 { font-size: 20px; font-weight: 600; margin-bottom: 8px; }
-p { color: var(--text-sec); font-size: 16px; }
-
-/* Botões */
-.btn-primary, .btn-secondary {
-  padding: 12px 24px;
-  border-radius: var(--radius);
-  border: none;
-  font-weight: 600;
-  cursor: pointer;
-  transition: transform 0.2s, filter 0.2s;
-  font-size: 16px;
-}
-
-.btn-primary { background-color: var(--primary); color: white; }
-.btn-secondary { background-color: var(--secondary); color: var(--text-main); }
-
-.btn-primary:hover, .btn-secondary:hover {
-  filter: brightness(1.1);
-  transform: translateY(-1px);
-}
-
-/* SEÇÃO HERO */
+/* 1. HERO SECTION */
 .hero-section {
+  position: relative;
+  min-height: 80vh;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 80px 10%;
-  gap: 40px;
-  min-height: 80vh;
+  overflow: hidden;
+  background-color: var(--color-dark); /* Fallback */
+  color: var(--color-light);
 }
 
-.hero-content { flex: 1; }
+.hero-background-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right, rgba(30, 30, 30, 0.9), rgba(92, 58, 33, 0.4));
+  z-index: 1;
+}
 
-.badge {
-  background: rgba(79, 70, 229, 0.1);
-  color: var(--primary);
-  padding: 4px 12px;
-  border-radius: 20px;
-  font-size: 12px;
-  font-weight: 700;
+.hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 700px;
+}
+
+.hero-title {
+  color: var(--color-sun);
+  font-size: clamp(2.5rem, 8vw, 4rem);
+  line-height: 1.1;
+  margin-bottom: var(--space-sm);
   text-transform: uppercase;
-  margin-bottom: 16px;
-  display: inline-block;
 }
 
-.hero-content h1 span { color: var(--primary); }
-
-.hero-image img {
-  max-width: 100%;
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
+.hero-tagline {
+  font-size: 1.25rem;
+  margin-bottom: var(--space-lg);
+  color: var(--color-sand);
 }
 
-/* SEÇÃO DE BENEFÍCIOS */
-.product-features {
-  padding: 64px 10%;
-  text-align: center;
+.hero-event-details {
+  display: flex;
+  gap: var(--space-md);
+  margin-bottom: var(--space-lg);
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.9rem;
+  color: var(--color-sun);
 }
 
-.feature-grid {
+/* 2. SOBRE O EVENTO */
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-xl);
+  align-items: center;
+}
+
+@media (min-width: 768px) {
+  .about-grid { grid-template-columns: 1fr 1fr; }
+}
+
+.about-image {
+  width: 100%;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-medium);
+  background-color: var(--color-sand);
+  aspect-ratio: 4/3;
+  object-fit: cover;
+}
+
+/* 3. PREMIAÇÃO */
+.prizes-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 32px;
-  margin-top: 48px;
+  gap: var(--space-md);
+  margin-bottom: var(--space-lg);
 }
 
-.feature-item {
-  padding: 24px;
-  background: white;
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
+.prize-card {
+  background-color: var(--color-sand);
+  padding: var(--space-lg);
+  border-radius: var(--radius-md);
+  border-bottom: 4px solid var(--color-terracotta);
+  transition: var(--transition-smooth);
 }
 
-.feature-item .icon {
-  font-size: 32px;
-  margin-bottom: 16px;
+.prize-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-medium);
+}
+
+.prize-category {
+  color: var(--color-terracotta);
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  font-weight: 700;
   display: block;
 }
 
-/* SEÇÃO DO SORTEIO */
-.giveaway-steps {
-  padding: 64px 10%;
-  background-color: white;
+.prize-value {
+  color: var(--color-brown);
+  font-size: 1.8rem;
 }
 
-.steps-container { text-align: center; }
-
-.step-cards {
+.prize-banner {
+  background-color: var(--color-brown);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  color: var(--color-light);
   display: flex;
   justify-content: center;
-  gap: 24px;
-  margin-top: 40px;
-  flex-wrap: wrap;
-}
-
-.step-card {
-  flex: 1;
-  min-width: 200px;
-  padding: 32px;
-  position: relative;
-  border: 1px solid #E5E7EB;
-  border-radius: var(--radius);
-}
-
-.step-number {
-  position: absolute;
-  top: -15px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: var(--primary);
-  color: white;
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: bold;
-}
-
-/* FOOTER / FINAL CTA */
-.final-cta {
-  padding: 80px 10%;
   text-align: center;
 }
 
-.cta-box {
-  background: white;
-  padding: 48px;
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-  border-top: 4px solid var(--secondary);
+/* 4. SORTEIOS */
+.sweepstakes-highlight {
+  background-color: var(--color-terracotta);
+  color: var(--color-light);
+  padding: var(--space-xl) var(--space-lg);
+  border-radius: var(--radius-lg);
+  text-align: center;
 }
 
-.cta-box p { margin-bottom: 24px; }
+.sweepstakes-highlight .section-title {
+  color: var(--color-sun);
+}
 
-/* Responsividade Básica */
-@media (max-width: 768px) {
-  .hero-section { flex-direction: column; text-align: center; padding: 40px 5%; }
-  .hero-image { order: -1; }
-  .step-cards { flex-direction: column; }
+.sweepstakes-list {
+  list-style: none;
+  padding: 0;
+  margin-top: var(--space-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+/* 5. ATRAÇÕES MUSICAIS */
+.artists-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--space-md);
+  margin-top: var(--space-lg);
+}
+
+.artist-item {
+  background-color: white;
+  padding: var(--space-md);
+  border-radius: var(--radius-md);
+  text-align: center;
+  box-shadow: var(--shadow-soft);
+}
+
+.artist-name {
+  color: var(--color-burned-red);
+  margin-bottom: var(--space-xs);
+}
+
+/* 6. ESTRUTURA */
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--space-md);
+}
+
+.feature-item {
+  text-align: center;
+  padding: var(--space-md);
+}
+
+.feature-icon-placeholder {
+  width: 48px;
+  height: 48px;
+  background-color: var(--color-sand);
+  border-radius: 50%;
+  margin: 0 auto var(--space-sm);
+}
+
+/* 7. GALERIA */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-sm);
+}
+
+@media (min-width: 768px) {
+  .gallery-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+.gallery-item {
+  background-color: var(--color-sand);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  aspect-ratio: 1;
+}
+
+.gallery-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: var(--transition-smooth);
+}
+
+.gallery-item:hover img {
+  transform: scale(1.05);
+}
+
+/* 8. PATROCINADORES */
+.sponsors-logos {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-lg);
+  opacity: 0.7;
+}
+
+.logo-slot {
+  font-weight: 700;
+  color: var(--color-brown);
+  padding: var(--space-sm);
+  border: 1px dashed var(--color-brown);
+}
+
+/* 9. RODAPÉ */
+.footer {
+  background-color: var(--color-dark);
+  color: var(--color-sand);
+  padding: var(--space-xl) 0 var(--space-md);
+  margin-top: var(--space-xl);
+}
+
+.footer-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: var(--space-xl);
+  margin-bottom: var(--space-xl);
+}
+
+.footer-bottom {
+  border-top: 1px solid rgba(232, 216, 195, 0.1);
+  padding-top: var(--space-md);
+  text-align: center;
+  font-size: 0.8rem;
+}
+
+.social-links {
+  display: flex;
+  gap: var(--space-sm);
 }

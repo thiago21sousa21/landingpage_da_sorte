@@ -1,0 +1,167 @@
+/* ============================= */
+/* RESET MODERNO */
+/* ============================= */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.6;
+}
+
+/* ============================= */
+/* VARIÁVEIS GLOBAIS */
+/* ============================= */
+
+:root {
+  /* 🎨 Cores Primárias */
+  --color-brown: #5C3A21;
+  --color-terracotta: #A0522D;
+  --color-sand: #E8D8C3;
+
+  /* 🌅 Cores Secundárias */
+  --color-sun: #D4A017;
+  --color-burned-red: #8B2E1A;
+
+  /* 🌑 Neutras */
+  --color-dark: #1E1E1E;
+  --color-light: #F5F1E8;
+
+  /* 🎯 Aplicação */
+  --color-bg: var(--color-light);
+  --color-text: var(--color-dark);
+  --color-primary: var(--color-brown);
+  --color-secondary: var(--color-sun);
+
+  /* 📐 Espaçamento (escala 8px) */
+  --space-xs: 8px;
+  --space-sm: 16px;
+  --space-md: 24px;
+  --space-lg: 40px;
+  --space-xl: 64px;
+
+  /* 🔲 Bordas */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+
+  /* 🌫 Sombras */
+  --shadow-soft: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --shadow-medium: 0 8px 20px rgba(0, 0, 0, 0.12);
+
+  /* ⏱ Transições */
+  --transition-fast: 0.2s ease-in-out;
+  --transition-smooth: 0.3s ease;
+}
+
+/* ============================= */
+/* TIPOGRAFIA */
+/* ============================= */
+
+h1, h2, h3, h4 {
+  font-weight: 700;
+  color: var(--color-primary);
+  line-height: 1.2;
+}
+
+h1 { font-size: 2.5rem; }
+h2 { font-size: 2rem; }
+h3 { font-size: 1.5rem; }
+
+p {
+  margin-bottom: var(--space-sm);
+}
+
+/* ============================= */
+/* CONTAINER PADRÃO */
+/* ============================= */
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--space-sm);
+}
+
+/* ============================= */
+/* BOTÃO BASE */
+/* ============================= */
+
+.btn {
+  display: inline-block;
+  padding: 12px 24px;
+  border-radius: var(--radius-md);
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  transition: var(--transition-smooth);
+  text-decoration: none;
+}
+
+.btn-primary {
+  background-color: var(--color-secondary);
+  color: var(--color-dark);
+}
+
+.btn-primary:hover {
+  background-color: #b8860b;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-soft);
+}
+
+/* ============================= */
+/* INPUT BASE */
+/* ============================= */
+
+input,
+textarea,
+select {
+  width: 100%;
+  padding: 12px;
+  border-radius: var(--radius-sm);
+  border: 2px solid var(--color-sand);
+  font-family: inherit;
+  transition: var(--transition-fast);
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: var(--color-secondary);
+  box-shadow: 0 0 0 2px rgba(212, 160, 23, 0.2);
+}
+
+/* ============================= */
+/* SEÇÕES */
+/* ============================= */
+
+.section {
+  padding: var(--space-xl) 0;
+}
+
+/* ============================= */
+/* RESPONSIVIDADE */
+/* ============================= */
+
+@media (max-width: 768px) {
+  h1 { font-size: 2rem; }
+  h2 { font-size: 1.6rem; }
+
+  .section {
+    padding: var(--space-lg) 0;
+  }
+}
