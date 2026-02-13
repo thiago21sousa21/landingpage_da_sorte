@@ -1,6 +1,10 @@
 from database import SessionLocal
 import models
 import security
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 def create_initial_admin():
     # 1. Abre uma sessão com o banco de dados
@@ -9,7 +13,7 @@ def create_initial_admin():
     try:
         # 2. Define os dados do seu admin
         username = "admin"
-        password_plana = "senha_super_forte_123" # ALTERE ESTA SENHA ANTES DE RODAR!
+        password_plana = os.getenv("SECRET_KEY") # ALTERE ESTA SENHA ANTES DE RODAR!
         
         # 3. Verifica se o usuário já existe para não dar erro
         user_exists = db.query(models.User).filter(models.User.username == username).first()
