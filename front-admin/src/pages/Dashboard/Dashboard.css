@@ -88,6 +88,29 @@
   align-self: flex-start; /* Evita que o botão ou card ocupem a largura toda sem necessidade */
 }
 
+.row-sorteado {
+  background-color: #f9f9f9;
+  color: #95a5a6; /* Texto um pouco mais claro (apagado) */
+  text-decoration: line-through; /* Opcional: risca o nome */
+}
+
+.badge-ganhador {
+  background-color: #27ae60;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+.badge-espera {
+  background-color: #bdc3c7;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+}
+
 /* Ajuste para dispositivos móveis */
 @media (max-width: 768px) {
   .dashboard-container {

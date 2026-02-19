@@ -3,78 +3,95 @@ import api from '../../api/api';
 import './Dashboard.css';
 import BotaoSorteio from '../../components/BotaoSorteio/BotaoSorteio';
 import CardVencedor from '../../components/CardVencedor/CardVencedor';
+import Header from '../../components/Header/Header'; // Importando o Header
 
 const Dashboard = () => {
   const [participantes, setParticipantes] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [resultadoSorteio, setResultadoSorteio] = useState(null);
   const [sorteiosRealizados, setSorteiosRealizados] = useState([]);
 
-useEffect(() => {
-  const carregarDadosIniciais = async () => {
-    try {
-      setLoading(true);
-
-      // Buscamos os participantes (obrigatório)
-      const resParticipantes = await api.get('/admin/participantes');
-      setParticipantes(resParticipantes.data);
-
-      // Buscamos os sorteios (opcional, se falhar não quebra a tabela)
-      try {
-        const resSorteios = await api.get('/admin/todos-sorteios');
-        setSorteiosRealizados(resSorteios.data);
-        
-        if (resSorteios.data && resSorteios.data.length > 0) {
-          setResultadoSorteio(resSorteios.data[0]);
-        }
-      } catch (e) {
-        console.warn("A rota de sorteios falhou, mas vou listar os participantes:", e);
-      }
-
-    } catch (error) {
-      console.error("Erro crítico ao carregar participantes:", error);
-    } finally {
-      setLoading(false);
-    }
+  // Função para verificar se o ID está na lista de ganhadores
+  const jaFoiSorteado = (participanteId) => {
+    return sorteiosRealizados.some(s => s.vencedor_id === participanteId);
   };
 
-  carregarDadosIniciais();
-}, []);
+  // Função para atualizar a lista assim que um novo sorteio for feito
+  const atualizarAposSorteio = (novoVencedor) => {
+    setSorteiosRealizados(prev => [novoVencedor, ...prev]);
+  };
+
+  useEffect(() => {
+    const carregarDadosIniciais = async () => {
+      try {
+        setLoading(true);
+        const resParticipantes = await api.get('/admin/participantes');
+        setParticipantes(resParticipantes.data);
+
+        try {
+          const resSorteios = await api.get('/admin/todos-sorteios');
+          setSorteiosRealizados(resSorteios.data);
+        } catch (e) {
+          console.warn("Falha ao carregar sorteios anteriores.");
+        }
+      } catch (error) {
+        console.error("Erro crítico:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    carregarDadosIniciais();
+  }, []);
 
   if (loading) return <div className="loading">Carregando painel...</div>;
 
   return (
-    <div className="dashboard-container">
-      <h1>Painel Administrativo 🏆</h1>
-      {/* No seu JSX, acima da tabela */}
-      <div className="vencedores-container">
-        {sorteiosRealizados.map(s => (
-          <CardVencedor key={s.id} dados={s} />
-        ))}
-      </div>
-      <BotaoSorteio onSorteioRealizado={setResultadoSorteio} />
-      
-      <table className="admin-table">
-        <thead>
-          <tr>
-            <th>Nome</th>
-            <th>Email</th>
-            <th>Número</th>
-          </tr>
-        </thead>
-        <tbody>
-          {participantes.map(p => (
-            <tr key={p.id}>
-              <td>{p.nome}</td>
-              <td>{p.email}</td>
-              <td>{p.numero_sorteio}</td>
-            </tr>
+    <>
+      <Header /> {/* Adicionado o topo com Logout */}
+      <div className="dashboard-container">
+        <h1>Painel Administrativo 🏆</h1>
+        
+        <div className="vencedores-container">
+          {sorteiosRealizados.map(s => (
+            <CardVencedor key={s.id} dados={s} />
           ))}
-        </tbody>
-      </table>
-      
-      
-    </div>
+        </div>
+
+        {/* Passamos a função de atualizar a lista para o botão */}
+        <BotaoSorteio onSorteioRealizado={atualizarAposSorteio} />
+        
+        <table className="admin-table">
+          <thead>
+            <tr>
+              <th>Nome</th>
+              <th>Email</th>
+              <th>Número</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {participantes.map(p => {
+              // ✅ AQUI ESTAVA O ERRO: Precisamos definir 'sorteado' para cada linha
+              const sorteado = jaFoiSorteado(p.id); 
+              
+              return (
+                <tr key={p.id} className={sorteado ? 'row-sorteado' : ''}>
+                  <td>{p.nome}</td>
+                  <td>{p.email}</td>
+                  <td>{p.numero_sorteio}</td>
+                  <td>
+                    {sorteado ? (
+                      <span className="badge-ganhador">Sorteado 🎉</span>
+                    ) : (
+                      <span className="badge-espera">Em espera</span>
+                    )}
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+    </>
   );
 };
 
