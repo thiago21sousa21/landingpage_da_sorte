@@ -8,24 +8,31 @@ const Dashboard = () => {
   const [participantes, setParticipantes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [resultadoSorteio, setResultadoSorteio] = useState(null);
+  const [sorteiosRealizados, setSorteiosRealizados] = useState([]);
 
-  useEffect(() => {
+useEffect(() => {
   const carregarDadosIniciais = async () => {
     try {
-      // Busca participantes e o último sorteio em paralelo
-      const [resParticipantes, resSorteio] = await Promise.all([
-        api.get('/admin/participantes'),
-        api.get('/admin/ultimo-sorteio') // Verifique se esta rota existe no seu FastAPI
-      ]);
+      setLoading(true);
 
+      // Buscamos os participantes (obrigatório)
+      const resParticipantes = await api.get('/admin/participantes');
       setParticipantes(resParticipantes.data);
-      
-      // Se já houve um sorteio, ele aparecerá mesmo após o F5!
-      if (resSorteio.data) {
-        setResultadoSorteio(resSorteio.data);
+
+      // Buscamos os sorteios (opcional, se falhar não quebra a tabela)
+      try {
+        const resSorteios = await api.get('/admin/todos-sorteios');
+        setSorteiosRealizados(resSorteios.data);
+        
+        if (resSorteios.data && resSorteios.data.length > 0) {
+          setResultadoSorteio(resSorteios.data[0]);
+        }
+      } catch (e) {
+        console.warn("A rota de sorteios falhou, mas vou listar os participantes:", e);
       }
+
     } catch (error) {
-      console.error("Erro ao carregar dados", error);
+      console.error("Erro crítico ao carregar participantes:", error);
     } finally {
       setLoading(false);
     }
@@ -39,7 +46,12 @@ const Dashboard = () => {
   return (
     <div className="dashboard-container">
       <h1>Painel Administrativo 🏆</h1>
-      <CardVencedor dados={resultadoSorteio} />
+      {/* No seu JSX, acima da tabela */}
+      <div className="vencedores-container">
+        {sorteiosRealizados.map(s => (
+          <CardVencedor key={s.id} dados={s} />
+        ))}
+      </div>
       <BotaoSorteio onSorteioRealizado={setResultadoSorteio} />
       
       <table className="admin-table">

@@ -13,7 +13,19 @@ from sqlalchemy.orm import Session
 from fastapi import Depends
 
 
+# Adicione este import para rodar o comando SQL puro
+from sqlalchemy import text
+
+
 load_dotenv()
+
+
+# # --- BLOCO TEMPORÁRIO PARA ATUALIZAR O BANCO ---
+# # Isso vai deletar a tabela antiga para o 'create_all' criar a nova com a coluna certa
+# with engine.connect() as conn:
+#     print("🗑️ Apagando tabela antiga de sorteios...")
+#     conn.execute(text("DROP TABLE IF EXISTS sorteios CASCADE"))
+#     conn.commit()
 
 # Cria as tabelas no banco de dados
 models.Base.metadata.create_all(bind=engine)

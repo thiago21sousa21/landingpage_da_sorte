@@ -7,6 +7,7 @@ from database import get_db
 from services import raffle
 from typing import List, Optional
 from sqlalchemy import desc
+from sqlalchemy.orm import joinedload
 
 router = APIRouter(prefix="/admin", tags=["Administração"])
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="admin/login")
@@ -42,36 +43,37 @@ def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depend
 def listar_participantes(db: Session = Depends(get_db), current_user: str = Depends(get_current_user)):
     return db.query(models.Participante).all()
 
-# Rota para realizar o sorteio
+# routers/admin.py
+
 @router.post("/sortear", response_model=schemas.SorteioResposta)
-def sortear_ganhador(db: Session = Depends(get_db), current_user: str = Depends(get_current_user)):
-    # Chamamos o serviço que criamos acima
-    resultado = raffle.realizar_sorteio(db)
+def sortear_ganhador(
+    dados: schemas.SorteioCreate, # Recebe o nome do prêmio do Front
+    db: Session = Depends(get_db), 
+    current_user: str = Depends(get_current_user)
+):
+    # Passamos o db e o nome do prêmio (item_sorteado) para o service
+    resultado = raffle.realizar_sorteio(db, dados.item_sorteado)
     
-    # Buscamos o objeto completo do vencedor para a resposta do Schema
+    # Buscamos o objeto completo do vencedor para a resposta
     vencedor = db.query(models.Participante).filter(models.Participante.id == resultado.vencedor_id).first()
     
     return {
         "id": resultado.id,
+        "item_sorteado": resultado.item_sorteado, # Adicionado na resposta
         "vencedor": vencedor,
         "data_sorteio": resultado.data_sorteio
     }
 
 
-@router.get("/ultimo-sorteio", response_model=Optional[schemas.SorteioResposta])
-def consultar_ultimo_sorteio(db: Session = Depends(get_db), current_user: str = Depends(get_current_user)):
-    # 1. Busca o primeiro (e único) sorteio realizado
-    resultado = db.query(models.Sorteio).order_by(desc(models.Sorteio.id)).first()
+@router.get("/todos-sorteios", response_model=List[schemas.SorteioResposta])
+def listar_todos_sorteios(db: Session = Depends(get_db), current_user: str = Depends(get_current_user)):
+    # 1. Usamos joinedload para buscar o sorteio e o participante em uma única consulta
+    # Isso evita erros de conexão e é muito mais rápido
+    sorteios = db.query(models.Sorteio)\
+        .options(joinedload(models.Sorteio.vencedor))\
+        .order_by(desc(models.Sorteio.id))\
+        .all()
     
-    # 2. Se não houver sorteio ainda, retorna None (ou 404, mas None é mais fácil para o front tratar)
-    if not resultado:
-        return None
-        
-    # 3. Se houver, busca os dados do participante que venceu
-    vencedor = db.query(models.Participante).filter(models.Participante.id == resultado.vencedor_id).first()
-    
-    return {
-        "id": resultado.id,
-        "vencedor": vencedor,
-        "data_sorteio": resultado.data_sorteio
-    }
+    # 2. Como usamos joinedload, o SQLAlchemy já associa o objeto 'vencedor' automaticamente
+    # O FastAPI/Pydantic vai converter isso para o schema SorteioResposta sozinho
+    return sorteios

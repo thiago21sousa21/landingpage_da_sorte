@@ -1,30 +1,47 @@
-from pydantic import BaseModel, EmailStr, Field, field_validator
-import re
+from pydantic import BaseModel, EmailStr, Field
 from datetime import datetime
 from typing import Optional
 
-# 1. O que o usuário ENVIA (Cadastro)
+# --- SCHEMAS DE PARTICIPANTE ---
+
 class ParticipanteCreate(BaseModel):
     nome: str = Field(..., min_length=3, max_length=100)
-    # Regex: garante exatamente 11 dígitos numéricos
     cpf: str = Field(..., pattern=r"^\d{11}$")
     email: EmailStr
     endereco: Optional[str] = None
 
-# 2. O que o sistema DEVOLVE (Resposta)
 class Participante(ParticipanteCreate):
     id: int
     numero_sorteio: int
     data_cadastro: datetime
 
     class Config:
-        from_attributes = True # Permite que o Pydantic leia dados do SQLAlchemy
+        from_attributes = True
 
-# 3. O que o sistema devolve após o sorteio
+
+# --- SCHEMAS DE SORTEIO (Ajustados para Multi-Prêmios) ---
+
+# O que o Front envia para o POST /admin/sortear
+class SorteioCreate(BaseModel):
+    item_sorteado: str = Field(..., min_length=1, description="Nome do prêmio sendo sorteado")
+
+# O que a API devolve ao realizar ou consultar sorteios
 class SorteioResposta(BaseModel):
     id: int
+    item_sorteado: str
     vencedor: Participante
     data_sorteio: datetime
 
     class Config:
         from_attributes = True
+
+
+# --- SCHEMAS DE AUTENTICAÇÃO (Para o Admin) ---
+
+class UserLogin(BaseModel):
+    username: str
+    password: str
+
+class Token(BaseModel):
+    access_token: str
+    token_type: str

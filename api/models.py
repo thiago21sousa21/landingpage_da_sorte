@@ -1,5 +1,6 @@
 from sqlalchemy import Column, Integer, String, DateTime, ForeignKey
 from sqlalchemy.sql import func
+from sqlalchemy.orm import relationship  # Importação necessária para o join
 from database import Base
 
 class Participante(Base):
@@ -13,12 +14,19 @@ class Participante(Base):
     numero_sorteio = Column(Integer, unique=True, index=True)
     data_cadastro = Column(DateTime(timezone=True), server_default=func.now())
 
+    # Relacionamento opcional: permite ver todos os prêmios que este participante ganhou
+    premios_ganhos = relationship("Sorteio", back_populates="vencedor")
+
 class Sorteio(Base):
     __tablename__ = "sorteios"
 
     id = Column(Integer, primary_key=True, index=True)
+    item_sorteado = Column(String)
     vencedor_id = Column(Integer, ForeignKey("participantes.id"), nullable=False)
-    data_sorteio = Column(DateTime(timezone=True), server_default=func.now())   
+    data_sorteio = Column(DateTime(timezone=True), server_default=func.now()) 
+    
+    # ESTA LINHA É A CHAVE: Liga o sorteio ao objeto Participante
+    vencedor = relationship("Participante", back_populates="premios_ganhos")
 
 class User(Base):
     __tablename__ = "users"
