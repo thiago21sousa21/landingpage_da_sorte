@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import "./LandingPage.css"
+import vaquejada from '../../assets/vaquejada.png'
 
 /**
  * COMPONENTES INTERNOS (SUB-SEÇÕES)
@@ -11,7 +12,7 @@ import "./LandingPage.css"
 const Hero = () => (
   <header className="hero-section">
     {/* Div preparada para futura imagem de fundo via CSS */}
-    <div className="hero-background-overlay"></div>
+    <div className="hero-background-overlay"><img src={vaquejada} alt="" /></div>
     
     <div className="container">
       <div className="hero-content">
