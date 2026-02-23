@@ -77,3 +77,21 @@ def listar_todos_sorteios(db: Session = Depends(get_db), current_user: str = Dep
     # 2. Como usamos joinedload, o SQLAlchemy já associa o objeto 'vencedor' automaticamente
     # O FastAPI/Pydantic vai converter isso para o schema SorteioResposta sozinho
     return sorteios
+
+@router.patch("/validar-presenca/{token}", response_model=schemas.Participante)
+def confirmar_presenca(token:str, db: Session = Depends(get_db), current_user: str = Depends(get_current_user)):
+    #1. Busca pelo token único
+    participante = db.query(models.Participante).filter(models.Participante.qr_token == token).first()
+
+    if not participante:
+        raise HTTPException(status_code=404, detail="QR Code inválido.")
+    
+    if participante.presenca_confirmada:
+        raise HTTPException(status_code=400, detail="Este Qr Code já foi utilizado")
+    
+    #2. marca da presença
+    participante.presenca_confirmada = True
+
+    db.commit()
+    db.refresh(participante)
+    return participante

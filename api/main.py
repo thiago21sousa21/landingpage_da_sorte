@@ -20,11 +20,12 @@ from sqlalchemy import text
 load_dotenv()
 
 
-# # --- BLOCO TEMPORÁRIO PARA ATUALIZAR O BANCO ---
-# # Isso vai deletar a tabela antiga para o 'create_all' criar a nova com a coluna certa
+# --- BLOCO TEMPORÁRIO PARA ATUALIZAR O BANCO ---
+# Isso vai deletar a tabela antiga para o 'create_all' criar a nova com a coluna certa
 # with engine.connect() as conn:
-#     print("🗑️ Apagando tabela antiga de sorteios...")
+#     print("@@@@@@   deletando as tabelas  @@@@@@@")
 #     conn.execute(text("DROP TABLE IF EXISTS sorteios CASCADE"))
+#     conn.execute(text("DROP TABLE IF EXISTS participantes CASCADE"))
 #     conn.commit()
 
 # Cria as tabelas no banco de dados

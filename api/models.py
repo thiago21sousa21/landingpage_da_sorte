@@ -1,7 +1,8 @@
-from sqlalchemy import Column, Integer, String, DateTime, ForeignKey
+from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, Boolean
 from sqlalchemy.sql import func
 from sqlalchemy.orm import relationship  # Importação necessária para o join
 from database import Base
+import uuid
 
 class Participante(Base):
     __tablename__ = "participantes"
@@ -16,6 +17,10 @@ class Participante(Base):
 
     # Relacionamento opcional: permite ver todos os prêmios que este participante ganhou
     premios_ganhos = relationship("Sorteio", back_populates="vencedor")
+
+    qr_token = Column(String(36), unique=True, index=True, default=lambda: str(uuid.uuid4()))
+    presenca_confirmada = Column(Boolean, default=False)
+
 
 class Sorteio(Base):
     __tablename__ = "sorteios"

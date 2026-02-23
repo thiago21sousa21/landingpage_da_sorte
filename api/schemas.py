@@ -15,6 +15,10 @@ class Participante(ParticipanteCreate):
     numero_sorteio: int
     data_cadastro: datetime
 
+    # ADICIONADOS:
+    qr_token: str # O token UUID que o Front vai usar para gerar o QR Code
+    presenca_confirmada: bool # Para o Front mostrar se ele já entrou ou não
+
     class Config:
         from_attributes = True
 
