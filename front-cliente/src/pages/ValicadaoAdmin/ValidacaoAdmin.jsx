@@ -13,8 +13,9 @@ const ValidacaoAdmin = () => {
   useEffect(() => {
     const validarEntrada = async () => {
       try {
+        const API_URL = import.meta.env.VITE_API_URL;
         // Chamada para o novo endpoint PATCH do seu backend
-        const response = await fetch(`http://localhost:8000/admin/validar-presenca/${token}`, {
+        const response = await fetch(`${API_URL}/admin/validar-presenca/${token}`, {
           method: 'PATCH',
           headers: {
             'Content-Type': 'application/json',

@@ -1,8 +1,8 @@
 import { Routes, Route } from 'react-router-dom';
 import Home from './pages/LandingPage/LandingPage';
 import CadastroParticipante from './pages/CadastroParticipante/CadastroParticipante';
-import ValidacaoAdmin from './pages/ValidacaoAdmin/ValidacaoAdmin';
-import ScannerPage from './pages/ValicadaoAdmin/ScannerPage';
+import ValidacaoAdmin from './pages/ValicadaoAdmin/ValidacaoAdmin';
+import ScannerPage from './pages/ValicadaoAdmin/ScannerPage/ScannerPage';
 
 function App() {
   return (
