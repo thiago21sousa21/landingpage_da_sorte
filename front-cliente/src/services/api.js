@@ -1,4 +1,4 @@
-const API_URL = import.meta.env.VITE_API_URL; // Ajuste para a URL do seu backend FastAPI
+const API_URL = import.meta.env.VITE_API_URL;
 
 export const participarSorteio = async (dadosParticipante) => {
   try {
@@ -10,14 +10,26 @@ export const participarSorteio = async (dadosParticipante) => {
       body: JSON.stringify(dadosParticipante),
     });
 
-    // Se o backend retornar erro (como CPF duplicado), capturamos aqui
+    // 1. Lemos o JSON uma única vez aqui
+    const data = await response.json();
+
+    // 2. Verificamos se a resposta foi erro (400, 422, 500, etc)
     if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(errorData.detail || 'Erro ao realizar cadastro');
+      // O FastAPI envia o erro em 'detail'. 
+      // Se for um erro de validação (422), 'detail' pode ser uma lista, 
+      // por isso tratamos para retornar sempre uma string.
+      const msg = typeof data.detail === 'string' 
+        ? data.detail 
+        : 'Dados inválidos ou duplicados';
+        
+      throw new Error(msg);
     }
 
-    return await response.json(); // Retorna o objeto Participante completo
+    // 3. Se chegou aqui, é sucesso. Retornamos os dados já lidos.
+    return data;
+
   } catch (error) {
+    // Esse throw repassa o erro (com a mensagem do detail) para o seu componente
     throw error;
   }
 };
