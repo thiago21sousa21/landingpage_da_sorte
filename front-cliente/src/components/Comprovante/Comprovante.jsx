@@ -3,7 +3,8 @@ import { QRCodeSVG } from "qrcode.react";
 import './Comprovante.css';
 
 const Comprovante = ({ dados }) => {
-  const urlValidacao = `http://localhost:5173/validar/${dados.qr_token}`;
+  const APP_URL = import.meta.env.VITE_APP_URL || window.location.origin;
+  const urlValidacao = `${APP_URL}/validar/${dados.qr_token}`;
 
   const gerarPDF = () => {
     const doc = new jsPDF();
