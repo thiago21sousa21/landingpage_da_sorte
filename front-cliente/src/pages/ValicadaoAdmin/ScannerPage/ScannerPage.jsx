@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Html5QrcodeScanner } from 'html5-qrcode';
-import './ValidacaoAdmin.css';
+import './ScannerPage.css';
 
 const ScannerPage = () => {
   const navigate = useNavigate();
