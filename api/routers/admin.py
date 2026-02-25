@@ -79,7 +79,7 @@ def listar_todos_sorteios(db: Session = Depends(get_db), current_user: str = Dep
     return sorteios
 
 @router.patch("/validar-presenca/{token}", response_model=schemas.Participante)
-def confirmar_presenca(token:str, db: Session = Depends(get_db), current_user: str = Depends(get_current_user)):
+def confirmar_presenca(token:str, db: Session = Depends(get_db)):
     #1. Busca pelo token único
     participante = db.query(models.Participante).filter(models.Participante.qr_token == token).first()
 

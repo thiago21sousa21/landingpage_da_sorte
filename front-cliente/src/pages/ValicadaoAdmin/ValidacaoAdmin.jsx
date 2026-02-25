@@ -3,24 +3,22 @@ import { useParams, useNavigate } from 'react-router-dom';
 import './ValidacaoAdmin.css';
 
 const ValidacaoAdmin = () => {
-  const { token } = useParams(); // Pega o UUID da URL: /validar/:token
+  const { token } = useParams();
   const navigate = useNavigate();
   
-  const [status, setStatus] = useState('processando'); // processando | sucesso | erro
+  const [status, setStatus] = useState('processando');
   const [mensagem, setMensagem] = useState('Validando credencial...');
   const [dadosVaqueiro, setDadosVaqueiro] = useState(null);
+
+  const API_URL = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
     const validarEntrada = async () => {
       try {
-        const API_URL = import.meta.env.VITE_API_URL;
-        // Chamada para o novo endpoint PATCH do seu backend
         const response = await fetch(`${API_URL}/admin/validar-presenca/${token}`, {
           method: 'PATCH',
-          headers: {
-            'Content-Type': 'application/json',
-            // 'Authorization': 'Bearer SEU_TOKEN_AQUI' // Se o admin estiver logado
-          }
+          headers: { 'Content-Type': 'application/json' }
+          // Sem headers de Authorization aqui, conforme solicitado
         });
 
         const data = await response.json();
@@ -28,21 +26,19 @@ const ValidacaoAdmin = () => {
         if (response.ok) {
           setStatus('sucesso');
           setMensagem('Check-in Realizado com Sucesso!');
-          setDadosVaqueiro(data); // Assume que a API retorna os dados do vaqueiro validado
+          setDadosVaqueiro(data);
         } else {
-          setStatus('erro');
+          setStatus('error'); // Mudança para 'error' para bater com o CSS
           setMensagem(data.detail || 'Falha ao validar entrada.');
         }
       } catch (error) {
-        setStatus('erro');
+        setStatus('error');
         setMensagem('Erro de conexão com o servidor.');
       }
     };
 
-    if (token) {
-      validarEntrada();
-    }
-  }, [token]);
+    if (token) validarEntrada();
+  }, [token, API_URL]);
 
   return (
     <main className={`validacao-page status-${status}`}>
@@ -51,7 +47,7 @@ const ValidacaoAdmin = () => {
           <div className="status-icon">
             {status === 'processando' && '⏳'}
             {status === 'sucesso' && '✅'}
-            {status === 'erro' && '❌'}
+            {status === 'error' && '❌'}
           </div>
 
           <h2 className="status-title">{mensagem}</h2>
@@ -63,9 +59,25 @@ const ValidacaoAdmin = () => {
             </div>
           )}
 
-          <button className="btn btn-primary" onClick={() => navigate('/')}>
-            Voltar ao Início
-          </button>
+          <div className="admin-actions">
+            {status !== 'processando' && (
+              <button 
+                className="btn btn-primary" 
+                onClick={() => navigate('/validar')}
+                style={{ width: '100%', marginBottom: '1rem' }}
+              >
+                {status === 'sucesso' ? 'Validar Próximo' : 'Tentar Novamente'}
+              </button>
+            )}
+
+            <button 
+              className="btn-back" 
+              onClick={() => navigate('/')}
+              style={{ background: 'none', border: 'none', color: 'var(--color-terracotta)', cursor: 'pointer' }}
+            >
+              Voltar para a Home
+            </button>
+          </div>
         </div>
       </div>
     </main>
