@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 import "./LandingPage.css"
 import Hero from "./components/Hero/Hero"
 import About from "./components/About/About"
@@ -11,6 +10,8 @@ import Gallery from './components/Gallery/Gallery';
 import Sponsors from './components/Sponsors/Sponsors';
 import Footer from './components/Footer/Footer';
 import BuscaComprovante from './components/BuscaComprovante/BuscaComprovante';
+import Comprovante from './components/Comprovante/Comprovante';
+
 
 
 /**

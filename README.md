@@ -78,7 +78,29 @@ landingpage_da_sorte
 │  │  │  │  └─ CadastroParticipante.jsx
 │  │  │  ├─ LandingPage
 │  │  │  │  ├─ LandingPage.css
-│  │  │  │  └─ LandingPage.jsx
+│  │  │  │  ├─ LandingPage.jsx
+│  │  │  │  └─ components
+│  │  │  │     ├─ About
+│  │  │  │     │  └─ About.jsx
+│  │  │  │     ├─ BuscaComprovante
+│  │  │  │     │  ├─ BuscaComprovante.css
+│  │  │  │     │  └─ BuscaComprovante.jsx
+│  │  │  │     ├─ Features
+│  │  │  │     │  └─ Features.jsx
+│  │  │  │     ├─ Footer
+│  │  │  │     │  └─ Footer.jsx
+│  │  │  │     ├─ Gallery
+│  │  │  │     │  └─ Gallery.jsx
+│  │  │  │     ├─ Hero
+│  │  │  │     │  └─ Hero.jsx
+│  │  │  │     ├─ MusicAttractions
+│  │  │  │     │  └─ MusicAttractiions.jsx
+│  │  │  │     ├─ Prizes
+│  │  │  │     │  └─ Prizes.jsx
+│  │  │  │     ├─ Sponsors
+│  │  │  │     │  └─ Sponsors.jsx
+│  │  │  │     └─ Sweepstakes
+│  │  │  │        └─ Sweepstakes.jsx
 │  │  │  └─ ValicadaoAdmin
 │  │  │     ├─ ScannerPage
 │  │  │     │  ├─ ScannerPage.css
