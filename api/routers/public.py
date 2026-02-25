@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from database import get_db
 import schemas
@@ -30,3 +30,17 @@ def consultar_vencedor(db: Session = Depends(get_db)):
         "vencedor": vencedor,
         "data_sorteio": resultado.data_sorteio
     }
+
+@router.get("/participante/{cpf}", response_model=schemas.Participante)
+def buscar_participante_por_cpf(cpf: str, db: Session = Depends(get_db)):
+    cpf_limpo = "".join(filter(str.isdigit, cpf))
+
+    participante = db.query(models.Participante).filter(models.Participante.cpf == cpf_limpo).first()
+
+    if not participante:
+        raise HTTPException(
+            status_code=404,
+            detail="Nenhuma inscrição encontrada para esse cpf"
+        )
+    
+    return participante
