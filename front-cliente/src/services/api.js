@@ -33,3 +33,21 @@ export const participarSorteio = async (dadosParticipante) => {
     throw error;
   }
 };
+
+
+
+export const buscarParticipantePorCPF = async (cpf) => {
+  const cpfLimpo = cpf.replace(/\D/g, ''); // Garante que vai apenas números
+  try {
+    const response = await fetch(`${API_URL}/participante/${cpfLimpo}`);
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.detail || 'Participante não encontrado.');
+    }
+
+    return data;
+  } catch (error) {
+    throw error;
+  }
+};

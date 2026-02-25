@@ -1,0 +1,113 @@
+/* Container raiz que cobre toda a tela */
+.busca-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(30, 30, 30, 0.8); /* Baseada na --color-dark */
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: var(--space-sm);
+}
+
+/* Estrutura interna do Modal */
+.busca-modal {
+  position: relative;
+  background-color: var(--color-light);
+  width: 100%;
+  max-width: 420px;
+  padding: var(--space-lg);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-medium);
+  border: 1px solid var(--color-sand);
+  text-align: center;
+  animation: modalFadeIn var(--transition-smooth);
+}
+
+@keyframes modalFadeIn {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Botão de fechar posicionado no canto superior */
+.btn-close {
+  position: absolute;
+  top: var(--space-sm);
+  right: var(--space-sm);
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: var(--color-brown);
+  cursor: pointer;
+  line-height: 1;
+  padding: var(--space-xs);
+  transition: var(--transition-fast);
+}
+
+.btn-close:hover {
+  color: var(--color-burned-red);
+  transform: scale(1.1);
+}
+
+/* Tipografia interna */
+.busca-modal h3 {
+  color: var(--color-brown);
+  margin-bottom: var(--space-xs);
+  font-size: 1.5rem;
+}
+
+.busca-modal p {
+  color: var(--color-terracotta);
+  font-size: 0.95rem;
+  margin-bottom: var(--space-md);
+}
+
+/* Espaçamento do formulário */
+.busca-modal form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+/* Estilização específica do input de CPF */
+.busca-modal input {
+  text-align: center;
+  font-size: 1.1rem;
+  letter-spacing: 1px;
+}
+
+/* Mensagem de erro dinâmica */
+.error-msg {
+  display: block;
+  color: var(--color-burned-red);
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-top: calc(var(--space-xs) * -1);
+  text-align: left;
+}
+
+/* Ajuste do botão global para ocupar largura total dentro do modal */
+.busca-modal .btn-primary {
+  width: 100%;
+  margin-top: var(--space-xs);
+}
+
+.busca-modal .btn-primary:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* Responsividade para telas muito pequenas */
+@media (max-width: 480px) {
+  .busca-modal {
+    padding: var(--space-md);
+  }
+  
+  .busca-modal h3 {
+    font-size: 1.25rem;
+  }
+}
