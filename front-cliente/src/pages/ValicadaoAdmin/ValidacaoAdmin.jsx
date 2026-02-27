@@ -13,46 +13,56 @@ const ValidacaoAdmin = () => {
   const API_URL = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
-    const validarEntrada = async () => {
-      const chaveSalva = localStorage.getItem('admin-key');
+  const validarEntrada = async () => {
+    const chaveSalva = localStorage.getItem('admin_key');
+    
+    // Log para você conferir se a chave está saindo do localStorage corretamente
+    console.log("Chave enviada:", chaveSalva);
 
-      try {
-        const response = await fetch(`${API_URL}/admin/validar-presenca/${token}`, {
-          method: 'PATCH',
-          headers: { 
-            'Content-Type': 'application/json',
-            'X-Admin-Key': chaveSalva
-          }
-          // Sem headers de Authorization aqui, conforme solicitado
-        });
-
-        const data = await response.json();
-
-        if (response.ok) {
-          setStatus('sucesso');
-          setMensagem('Check-in Realizado com Sucesso!');
-          setDadosVaqueiro(data);
-        } else {
-          if (response.status === 401 || response.status === 403) {
-            alert("Chave Inválida! Redirecionando para configuração...");
-            localStorage.removeItem('admin_key'); // Opcional: limpa a chave errada
-            navigate('/admin-config'); 
-            return;
-          }
-
-          setStatus('error');
-          setMensagem(data.detail || 'Falha ao validar entrada.');
+    try {
+      const response = await fetch(`${API_URL}/admin/validar-presenca/${token}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Admin-Key': chaveSalva
         }
-      } catch (error) {
-        if (response.status === 401 || response.status === 403) {
-          setStatus('error');
-          setMensagem("Chave Inválida! O acesso foi negado pelo servidor.");
-        }
+      });
+
+      // Se a resposta for 401 ou 403, aí sim redirecionamos
+      if (response.status === 401 || response.status === 403) {
+        console.error("Erro de autenticação detectado.");
+        alert("Chave Inválida! Verifique as configurações.");
+        navigate('/admin-config');
+        return;
       }
-    };
 
-    if (token) validarEntrada();
-  }, [token, API_URL]);
+      const data = await response.json();
+
+      if (response.ok) {
+        setStatus('sucesso');
+        setMensagem('Check-in Realizado!');
+        setDadosVaqueiro(data);
+
+        // Timer de 3 segundos para voltar ao scanner automaticamente
+        setTimeout(() => {
+          navigate('/validar');
+        }, 3000);
+      } else {
+        // Erros de negócio (QR já usado, etc) não redirecionam
+        setStatus('error');
+        setMensagem(data.detail || 'Falha ao validar entrada.');
+      }
+    } catch (error) {
+      console.error("Erro na requisição:", error);
+      setStatus('error');
+      setMensagem('Erro de conexão com o servidor.');
+    }
+  };
+
+  if (token && status === 'processando') {
+    validarEntrada();
+  }
+}, [token, API_URL, navigate, status]);
 
   return (
     <main className={`validacao-page status-${status}`}>
