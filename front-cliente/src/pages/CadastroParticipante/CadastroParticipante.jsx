@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { participarSorteio } from '../../services/api';
-import Comprovante from '../../components/Comprovante/Comprovante';
+import Comprovante from '../LandingPage/components/Comprovante/Comprovante';
 import './CadastroParticipante.css';
 
 const CadastroParticipante = () => {

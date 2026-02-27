@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, status, Header
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from jose import jwt, JWTError
 import security, schemas, models
@@ -8,6 +8,10 @@ from services import raffle
 from typing import List, Optional
 from sqlalchemy import desc
 from sqlalchemy.orm import joinedload
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
 
 router = APIRouter(prefix="/admin", tags=["Administração"])
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="admin/login")
@@ -79,7 +83,12 @@ def listar_todos_sorteios(db: Session = Depends(get_db), current_user: str = Dep
     return sorteios
 
 @router.patch("/validar-presenca/{token}", response_model=schemas.Participante)
-def confirmar_presenca(token:str, db: Session = Depends(get_db)):
+def confirmar_presenca(token:str, db: Session = Depends(get_db), x_admin_key:str = Header(None)):
+    CHAVE_MESTRA = os.getenv("VALIDATION_KEY")
+
+    if x_admin_key != CHAVE_MESTRA:
+        raise HTTPException(status_code=403, detail="Acesso negado: Chave de validação inválida ou ausente")
+    
     #1. Busca pelo token único
     participante = db.query(models.Participante).filter(models.Participante.qr_token == token).first()
 

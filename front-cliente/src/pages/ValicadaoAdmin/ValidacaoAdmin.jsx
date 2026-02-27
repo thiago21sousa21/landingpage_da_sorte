@@ -14,10 +14,15 @@ const ValidacaoAdmin = () => {
 
   useEffect(() => {
     const validarEntrada = async () => {
+      const chaveSalva = localStorage.getItem('admin-key');
+
       try {
         const response = await fetch(`${API_URL}/admin/validar-presenca/${token}`, {
           method: 'PATCH',
-          headers: { 'Content-Type': 'application/json' }
+          headers: { 
+            'Content-Type': 'application/json',
+            'X-Admin-Key': chaveSalva
+          }
           // Sem headers de Authorization aqui, conforme solicitado
         });
 
@@ -28,12 +33,21 @@ const ValidacaoAdmin = () => {
           setMensagem('Check-in Realizado com Sucesso!');
           setDadosVaqueiro(data);
         } else {
-          setStatus('error'); // Mudança para 'error' para bater com o CSS
+          if (response.status === 401 || response.status === 403) {
+            alert("Chave Inválida! Redirecionando para configuração...");
+            localStorage.removeItem('admin_key'); // Opcional: limpa a chave errada
+            navigate('/admin-config'); 
+            return;
+          }
+
+          setStatus('error');
           setMensagem(data.detail || 'Falha ao validar entrada.');
         }
       } catch (error) {
-        setStatus('error');
-        setMensagem('Erro de conexão com o servidor.');
+        if (response.status === 401 || response.status === 403) {
+          setStatus('error');
+          setMensagem("Chave Inválida! O acesso foi negado pelo servidor.");
+        }
       }
     };
 

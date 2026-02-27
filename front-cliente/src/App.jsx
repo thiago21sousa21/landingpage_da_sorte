@@ -3,6 +3,8 @@ import Home from './pages/LandingPage/LandingPage';
 import CadastroParticipante from './pages/CadastroParticipante/CadastroParticipante';
 import ValidacaoAdmin from './pages/ValicadaoAdmin/ValidacaoAdmin';
 import ScannerPage from './pages/ValicadaoAdmin/ScannerPage/ScannerPage';
+import ConfigAdmin from './pages/ValicadaoAdmin/ConfigAdmin/ConfigAdmin';
+
 
 function App() {
   return (
@@ -15,6 +17,8 @@ function App() {
         <Route path="/cadastro" element={<CadastroParticipante />} />
         <Route path='/validar' element={<ScannerPage/>}/>
         <Route path='/validar/:token' element={<ValidacaoAdmin/>}/>
+        <Route path='/admin-config' element={<ConfigAdmin/>}/>
+
       </Routes>
     </div>
   );
