@@ -15,9 +15,6 @@ const ValidacaoAdmin = () => {
   useEffect(() => {
   const validarEntrada = async () => {
     const chaveSalva = localStorage.getItem('admin_key');
-    
-    // Log para você conferir se a chave está saindo do localStorage corretamente
-    console.log("Chave enviada:", chaveSalva);
 
     try {
       const response = await fetch(`${API_URL}/admin/validar-presenca/${token}`, {
@@ -30,7 +27,7 @@ const ValidacaoAdmin = () => {
 
       // Se a resposta for 401 ou 403, aí sim redirecionamos
       if (response.status === 401 || response.status === 403) {
-        console.error("Erro de autenticação detectado.");
+        
         alert("Chave Inválida! Verifique as configurações.");
         navigate('/admin-config');
         return;
@@ -53,7 +50,7 @@ const ValidacaoAdmin = () => {
         setMensagem(data.detail || 'Falha ao validar entrada.');
       }
     } catch (error) {
-      console.error("Erro na requisição:", error);
+      
       setStatus('error');
       setMensagem('Erro de conexão com o servidor.');
     }
