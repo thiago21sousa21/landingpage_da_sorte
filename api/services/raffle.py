@@ -2,6 +2,7 @@ import random
 from sqlalchemy.orm import Session
 from fastapi import HTTPException
 import models
+import random
 
 def realizar_sorteio(db: Session, descricao_item: str):
     # 1. Pegar IDs de quem JÁ GANHOU
@@ -13,7 +14,8 @@ def realizar_sorteio(db: Session, descricao_item: str):
     # 2. Buscar participantes que NÃO estão na lista de vencedores
     # Adicionamos a lógica para excluir quem já ganhou
     candidatos = db.query(models.Participante).filter(
-        ~models.Participante.id.in_(vencedores_lista)
+        ~models.Participante.id.in_(vencedores_lista),
+        models.Participante.presenca_confirmada==True
     ).all()
 
     if not candidatos:
@@ -24,7 +26,7 @@ def realizar_sorteio(db: Session, descricao_item: str):
         )
 
     # 3. Escolher um vencedor aleatório entre os candidatos restantes
-    import random
+
     ganhador = random.choice(candidatos)
 
     # 4. Registrar o novo sorteio com o item sorteado
