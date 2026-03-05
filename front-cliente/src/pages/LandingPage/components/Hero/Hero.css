@@ -1,0 +1,37 @@
+/* Container para a logo no topo esquerdo */
+.hero-logo-wrapper {
+  position: absolute; /* Para flutuar no topo do container */
+  top: var(--space-md); /* Espaçamento do topo usando variável global */
+  left: var(--space-md); /* Espaçamento da esquerda usando variável global */
+  z-index: 10; /* Garante que fica acima do fundo */
+}
+
+/* Estilização da imagem da logo */
+.hero-logo-img {
+  height: 80px; /* Define uma altura fixa e elegante */
+  width: auto; /* Mantém a proporção */
+  object-fit: contain;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5)); /* Sombra suave para destacar do fundo, se necessário */
+  transition: var(--transition-smooth); /* Transição suave usando variável global */
+}
+
+/* Responsividade: Diminui a logo em telas menores */
+@media (max-width: 768px) {
+  .hero-logo-img {
+    height: 60px;
+  }
+}
+
+/* --- Ajustes necessários nas classes existentes --- */
+
+/* Garante que o container raiz tenha position relative para o absolute da logo funcionar */
+.hero-section .container {
+  position: relative;
+  /* ... outros estilos existentes ... */
+}
+
+/* Ajuste o hero-content para não colidir com a logo */
+.hero-content {
+  margin-top: calc(80px + var(--space-lg)); /* Dá espaço para a logo (80px) + um respiro */
+  /* ... outros estilos existentes ... */
+}

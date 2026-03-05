@@ -5,7 +5,7 @@ const About = () => (
         <div className="about-text">
           <h2 className="section-title">Nossa Tradição</h2>
           <p>
-            Desde 1985, a Vaquejada Real de Ouro celebra a força do vaqueiro nordestino. 
+            Desde 1985, a Vaquejada Luiz Fernando celebra a força do vaqueiro nordestino. 
             O que começou como uma reunião entre amigos tornou-se o maior evento de 
             derrubada de boi do Norte-Nordeste, preservando a cultura e o respeito ao animal.
           </p>
